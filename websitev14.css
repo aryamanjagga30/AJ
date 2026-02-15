@@ -716,29 +716,42 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 80px 32px 120px;
+    justify-content: center;
+    padding: 60px 32px;
     z-index: 10001;
-    transition: opacity 0.5s;
-}
-
-.mobile-view.hidden {
     opacity: 0;
     pointer-events: none;
 }
 
+.mobile-view.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .mobile-logo {
+    position: absolute;
+    top: 60px;
     height: 60px;
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 4px 12px rgba(0, 212, 170, 0.3));
-    animation: fadeInDown 1s ease 0.5s both;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.mobile-logo.animate {
+    animation: fadeInDown 1s ease forwards;
 }
 
 .mobile-message {
     text-align: center;
     max-width: 320px;
-    animation: fadeIn 1s ease 1s both;
+    margin-top: -80px;
+    opacity: 0;
+}
+
+.mobile-message.animate {
+    animation: fadeIn 1s ease 0.5s forwards;
 }
 
 .mobile-message p {
