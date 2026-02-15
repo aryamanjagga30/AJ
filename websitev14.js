@@ -12,46 +12,24 @@ function isMobileDevice() {
 const IS_MOBILE = isMobileDevice();
 
 // Mobile camera animation and UI
-// Mobile camera animation and UI
 if (IS_MOBILE) {
-    let mobileAnimated = false;
-    
-    // Check every 100ms if avatar has loaded
-    const mobileAnimationCheck = setInterval(() => {
-        if (avatar && !mobileAnimated) {
-            mobileAnimated = true;
-            clearInterval(mobileAnimationCheck);
-            
-            // Wait a bit after loading screen disappears
-            setTimeout(() => {
-                // Camera pan animation (from starting position to scene 2)
-                gsap.to(camera.position, {
-                    x: -2,
-                    y: 0.3,
-                    z: 2.5,
-                    duration: 2.5,
-                    ease: 'power2.inOut',
-                    onUpdate: () => camera.lookAt(0, 1.5, 0),
-                    onComplete: () => {
-                        // Show mobile UI after camera animation
-                        const mobileView = document.getElementById('mobile-view');
-                        const logo = document.querySelector('.mobile-logo');
-                        const message = document.querySelector('.mobile-message');
-                        
-                        if (mobileView) mobileView.classList.add('show');
-                        if (logo) logo.classList.add('animate');
-                        if (message) message.classList.add('animate');
-                    }
-                });
-            }, 800);
-        }
-    }, 100);
-    
-    // Disable section navigation on mobile
-    document.querySelectorAll('[data-section]').forEach(el => {
-        el.style.pointerEvents = 'none';
+    // Show mobile view
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('mobile-view').classList.remove('hidden');
+        
+        // Hide desktop UI elements
+        const nav = document.querySelector('.nav');
+        const progressBar = document.querySelector('.progress-bar');
+        const fpsCounter = document.querySelector('.fps-counter');
+        const sectionsContainer = document.querySelector('.sections-container');
+        
+        if (nav) nav.style.display = 'none';
+        if (progressBar) progressBar.style.display = 'none';
+        if (fpsCounter) fpsCounter.style.display = 'none';
+        if (sectionsContainer) sectionsContainer.style.display = 'none';
     });
 }
+
 
 
 
