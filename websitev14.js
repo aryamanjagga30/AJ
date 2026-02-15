@@ -180,7 +180,7 @@ const innerGlow = new THREE.Mesh(
         blending: THREE.AdditiveBlending
     })
 );
-innerGlow.position.y = 7.5;
+innerGlow.position.y = 6.5;
 lampGroup.add(innerGlow);
 
 
@@ -193,7 +193,7 @@ const midGlow = new THREE.Mesh(
         blending: THREE.AdditiveBlending
     })
 );
-midGlow.position.y = 7.5;
+midGlow.position.y = 6.5;
 lampGroup.add(midGlow);
 
 
@@ -206,7 +206,7 @@ const outerGlow = new THREE.Mesh(
         blending: THREE.AdditiveBlending
     })
 );
-outerGlow.position.y = 7.5;
+outerGlow.position.y = 6.5;
 lampGroup.add(outerGlow);
 
 
