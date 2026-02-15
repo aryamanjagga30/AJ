@@ -212,7 +212,7 @@ lampGroup.add(outerGlow);
 
 // Spotlight
 const charLight = new THREE.SpotLight(0xffaa33, 125, 32, Math.PI / 3, 0.5, 1.6);
-charLight.position.set(0, 9.3, 0);
+charLight.position.set(0, 9.3, 5);
 charLight.target.position.set(0, 1, 0);
 charLight.castShadow = true;
 charLight.shadow.mapSize.width = 2048;
