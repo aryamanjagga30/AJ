@@ -103,18 +103,12 @@ html, body {
 }
 
 
-.logo-img {
-    height: 50px;           /* Control height */
-    width: auto;            /* Keep aspect ratio */
-    object-fit: contain;    /* Fit nicely */
-    
-    /* Optional positioning tweaks */
-    position: relative;
-    top: 0px;               /* Move up/down */
-    left: 0px;              /* Move left/right */
-    
-    /* Optional scaling */
-    transform: scale(1.5px);    /* Change 1 to 1.5 for bigger, 0.8 for smaller */
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--teal), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 
@@ -261,7 +255,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 250px;
+    gap: 200px;
 }
 
 
@@ -706,57 +700,4 @@ html, body {
     .nav, .section {
         padding: 24px 32px;
     }
-}
-
-
-/* ===== MOBILE VIEW (V15 ADDITION) ===== */
-.mobile-view {
-  position: fixed;
-  inset: 0;
-  background: #0a1528;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 10001;
-  padding: 32px;
-  transition: opacity 0.5s;
-}
-
-.mobile-view.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.mobile-logo {
-  height: 60px;
-  width: auto;
-  object-fit: contain;
-  margin-bottom: 60px;
-  filter: drop-shadow(0 4px 12px rgba(0, 212, 170, 0.3));
-}
-
-.mobile-message {
-  text-align: center;
-  max-width: 320px;
-}
-
-.mobile-message p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 16px;
-}
-
-.mobile-emphasis {
-  font-size: 18px !important;
-  font-weight: 700;
-  background: linear-gradient(135deg, var(--teal), var(--cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-#desktop-experience.hidden {
-  display: none;
 }
