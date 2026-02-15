@@ -13,22 +13,64 @@ const IS_MOBILE = isMobileDevice();
 
 // Mobile camera animation and UI
 if (IS_MOBILE) {
-    // Show mobile view
-    window.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('mobile-view').classList.remove('hidden');
+    console.log('📱 Mobile mode active, waiting for avatar...');
+    
+    let mobileAnimated = false;
+    let checkCount = 0;
+    
+    // Check every 100ms if avatar has loaded
+    const mobileAnimationCheck = setInterval(() => {
+        checkCount++;
         
-        // Hide desktop UI elements
-        const nav = document.querySelector('.nav');
-        const progressBar = document.querySelector('.progress-bar');
-        const fpsCounter = document.querySelector('.fps-counter');
-        const sectionsContainer = document.querySelector('.sections-container');
+        if (avatar) {
+            console.log('✅ Avatar found, starting camera animation...');
+            mobileAnimated = true;
+            clearInterval(mobileAnimationCheck);
+            
+            // Wait a bit after loading screen disappears
+            setTimeout(() => {
+                console.log('🎬 Animating camera...');
+                
+                // Camera pan animation (from starting position to scene 2)
+                gsap.to(camera.position, {
+                    x: -2,
+                    y: 0.3,
+                    z: 2.5,
+                    duration: 2.5,
+                    ease: 'power2.inOut',
+                    onUpdate: () => camera.lookAt(0, 1.5, 0),
+                    onComplete: () => {
+                        console.log('✅ Camera animation complete, showing UI...');
+                        
+                        // Show mobile UI after camera animation
+                        const mobileView = document.getElementById('mobile-view');
+                        const logo = document.querySelector('.mobile-logo');
+                        const message = document.querySelector('.mobile-message');
+                        
+                        if (mobileView) mobileView.classList.add('show');
+                        
+                        setTimeout(() => {
+                            if (logo) logo.classList.add('animate');
+                            if (message) message.classList.add('animate');
+                        }, 100);
+                    }
+                });
+            }, 800);
+        }
         
-        if (nav) nav.style.display = 'none';
-        if (progressBar) progressBar.style.display = 'none';
-        if (fpsCounter) fpsCounter.style.display = 'none';
-        if (sectionsContainer) sectionsContainer.style.display = 'none';
+        // Stop checking after 50 attempts (5 seconds)
+        if (checkCount > 50) {
+            console.log('❌ Avatar not found after 5 seconds');
+            clearInterval(mobileAnimationCheck);
+        }
+    }, 100);
+    
+    // Disable section navigation on mobile
+    document.querySelectorAll('[data-section]').forEach(el => {
+        el.style.pointerEvents = 'none';
     });
 }
+
 
 
 
