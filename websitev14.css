@@ -103,13 +103,20 @@ html, body {
 }
 
 
-.logo {
-    font-size: 24px;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--teal), var(--cyan));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.logo .logo-img {
+    height: 50px;           /* Control height */
+    width: auto;            /* Keep aspect ratio */
+    object-fit: contain;    /* Fit nicely */
+    
+    /* Optional positioning tweaks */
+    position: relative;
+    top: 0px;               /* Move up/down */
+    left: 0px;              /* Move left/right */
+    
+    /* Optional scaling */
+    transform: scale(2);    /* Change 1 to 1.5 for bigger, 0.8 for smaller */
 }
+
 
 
 .nav-links {
