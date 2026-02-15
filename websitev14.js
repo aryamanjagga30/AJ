@@ -1,4 +1,30 @@
 // WEBSITEV14 - Character at -2.05 + LAMP.GLB (6x)
+// ===== MOBILE DETECTION =====
+function isMobileDevice() {
+    const isSmallScreen = window.innerWidth < 1024;
+    const isMobileUA = /android|webos|iphone|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase());
+    const isTablet = /ipad|tablet/i.test(navigator.userAgent.toLowerCase());
+    const isLargeTablet = isTablet && window.innerWidth >= 1024;
+    
+    return (isSmallScreen || isMobileUA) && !isLargeTablet;
+}
+
+const IS_MOBILE = isMobileDevice();
+
+if (IS_MOBILE) {
+    // Show mobile view
+    window.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('mobile-view').classList.remove('hidden');
+        
+        // Hide desktop UI elements
+        document.querySelector('.nav').classList.add('desktop-ui', 'hidden');
+        document.querySelector('.progress-bar').classList.add('desktop-ui', 'hidden');
+        document.querySelector('.fps-counter').classList.add('desktop-ui', 'hidden');
+        document.querySelector('.sections-container').classList.add('desktop-ui', 'hidden');
+    });
+}
+
+// ===== ORIGINAL V14 CODE CONTINUES BELOW =====
 
 
 const canvas = document.getElementById('webgl');

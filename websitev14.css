@@ -708,3 +708,71 @@ html, body {
         padding: 24px 32px;
     }
 }
+/* ===== MOBILE VIEW ===== */
+.mobile-view {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 80px 32px 120px;
+    z-index: 10001;
+    transition: opacity 0.5s;
+}
+
+.mobile-view.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.mobile-logo {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0, 212, 170, 0.3));
+    animation: fadeInDown 1s ease 0.5s both;
+}
+
+.mobile-message {
+    text-align: center;
+    max-width: 320px;
+    animation: fadeIn 1s ease 1s both;
+}
+
+.mobile-message p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 8px;
+}
+
+.mobile-emphasis {
+    font-size: 18px !important;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--teal), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.desktop-ui.hidden {
+    display: none !important;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
