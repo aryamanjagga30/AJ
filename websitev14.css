@@ -773,6 +773,13 @@ html, body {
 .desktop-ui.hidden {
     display: none !important;
 }
+/* Make sure sections are hidden on mobile */
+.sections-container.hidden {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 
 @keyframes fadeInDown {
     from {
