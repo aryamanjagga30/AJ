@@ -151,10 +151,10 @@ lampLoader.load(
         lampModel = gltf.scene;
 
         // SCALE IT 6x
-        lampModel.scale.set(6, 6, 6);
+        lampModel.scale.set(4, 4, 4);
 
         // POSITION IT UP
-        lampModel.position.y = 10;
+        lampModel.position.y = 3;
 
         lampModel.traverse((child) => {
             if (child.isMesh) {
