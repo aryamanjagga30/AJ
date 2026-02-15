@@ -12,26 +12,30 @@ function isMobileDevice() {
 const IS_MOBILE = isMobileDevice();
 
 // Mobile camera animation and UI
+// Mobile camera animation and UI
 if (IS_MOBILE) {
     console.log('📱 Mobile mode active, waiting for avatar...');
     
     let mobileAnimated = false;
     let checkCount = 0;
     
-    // Check every 100ms if avatar has loaded
+    // More reliable check - wait for both avatar AND loading screen to be hidden
     const mobileAnimationCheck = setInterval(() => {
         checkCount++;
         
-        if (avatar) {
-            console.log('✅ Avatar found, starting camera animation...');
+        const loadingScreen = document.getElementById('loading-screen');
+        const isLoadingHidden = loadingScreen && loadingScreen.classList.contains('hidden');
+        
+        if (avatar && isLoadingHidden && typeof gsap !== 'undefined') {
+            console.log('✅ Avatar loaded, starting animation...');
             mobileAnimated = true;
             clearInterval(mobileAnimationCheck);
             
-            // Wait a bit after loading screen disappears
+            // Longer wait to ensure everything is ready
             setTimeout(() => {
                 console.log('🎬 Animating camera...');
                 
-                // Camera pan animation (from starting position to scene 2)
+                // Camera pan animation
                 gsap.to(camera.position, {
                     x: -2,
                     y: 0.3,
@@ -40,9 +44,8 @@ if (IS_MOBILE) {
                     ease: 'power2.inOut',
                     onUpdate: () => camera.lookAt(0, 1.5, 0),
                     onComplete: () => {
-                        console.log('✅ Camera animation complete, showing UI...');
+                        console.log('✅ Animation complete, showing UI...');
                         
-                        // Show mobile UI after camera animation
                         const mobileView = document.getElementById('mobile-view');
                         const logo = document.querySelector('.mobile-logo');
                         const message = document.querySelector('.mobile-message');
@@ -52,24 +55,39 @@ if (IS_MOBILE) {
                         setTimeout(() => {
                             if (logo) logo.classList.add('animate');
                             if (message) message.classList.add('animate');
-                        }, 100);
+                        }, 200);
                     }
                 });
-            }, 800);
+            }, 1200);
         }
         
-        // Stop checking after 50 attempts (5 seconds)
-        if (checkCount > 50) {
-            console.log('❌ Avatar not found after 5 seconds');
+        // Increase timeout to 10 seconds for slower mobile connections
+        if (checkCount > 100) {
+            console.log('❌ Timeout - forcing UI display');
             clearInterval(mobileAnimationCheck);
+            
+            // Fallback: show UI without animation if taking too long
+            const mobileView = document.getElementById('mobile-view');
+            const logo = document.querySelector('.mobile-logo');
+            const message = document.querySelector('.mobile-message');
+            
+            if (camera) {
+                camera.position.set(-2, 0.3, 2.5);
+                camera.lookAt(0, 1.5, 0);
+            }
+            
+            if (mobileView) mobileView.classList.add('show');
+            if (logo) logo.classList.add('animate');
+            if (message) message.classList.add('animate');
         }
     }, 100);
     
-    // Disable section navigation on mobile
+    // Disable section navigation
     document.querySelectorAll('[data-section]').forEach(el => {
         el.style.pointerEvents = 'none';
     });
 }
+
 
 
 
