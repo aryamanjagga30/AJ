@@ -114,7 +114,7 @@ html, body {
     left: 0px;              /* Move left/right */
     
     /* Optional scaling */
-    transform: scale(1);    /* Change 1 to 1.5 for bigger, 0.8 for smaller */
+    transform: scale(1.5px);    /* Change 1 to 1.5 for bigger, 0.8 for smaller */
 }
 
 
