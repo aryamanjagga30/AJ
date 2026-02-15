@@ -1,4 +1,4 @@
-// WEBSITEV14 - Character at -2.05 + LAMP.GLB (6x) + SPACE SKY
+// WEBSITEV14 - Character at -2.05 + LAMP.GLB (6x)
 
 
 const canvas = document.getElementById('webgl');
@@ -38,13 +38,13 @@ function updateFPS() {
 }
 
 
-// SPACE SKY - Deep black space
-scene.background = new THREE.Color(0x000000);
+// Sky
+scene.background = new THREE.Color(0x0a1528);
 const skyGeo = new THREE.SphereGeometry(450, 32, 32);
 const skyMat = new THREE.ShaderMaterial({
     uniforms: {
-        topColor: { value: new THREE.Color(0x000510) },
-        bottomColor: { value: new THREE.Color(0x000000) }
+        topColor: { value: new THREE.Color(0x0a1020) },
+        bottomColor: { value: new THREE.Color(0x1a2840) }
     },
     vertexShader: `
         varying float vY;
@@ -67,11 +67,11 @@ const sky = new THREE.Mesh(skyGeo, skyMat);
 scene.add(sky);
 
 
-const ambient = new THREE.AmbientLight(0x404060, 0.3);
+const ambient = new THREE.AmbientLight(0x506070, 0.65);
 scene.add(ambient);
 
 
-const moonRim = new THREE.DirectionalLight(0x6080c0, 0.25);
+const moonRim = new THREE.DirectionalLight(0x5080c0, 0.45);
 moonRim.position.set(-25, 50, -20);
 moonRim.castShadow = false;
 scene.add(moonRim);
@@ -151,10 +151,10 @@ lampLoader.load(
         lampModel = gltf.scene;
 
         // SCALE IT 6x
-        lampModel.scale.set(6, 6, 6);
+        lampModel.scale.set(4, 4, 4);
 
         // POSITION IT UP
-        lampModel.position.y = 10;
+        lampModel.position.y = 4.2;
 
         lampModel.traverse((child) => {
             if (child.isMesh) {
@@ -170,17 +170,17 @@ lampLoader.load(
 );
 
 
-// Glow spheres at top (y = 9.3)
+// Glow spheres at top (y = 7)
 const innerGlow = new THREE.Mesh(
     new THREE.SphereGeometry(0.45, 16, 16),
     new THREE.MeshBasicMaterial({
         color: 0xffffee,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.3,
         blending: THREE.AdditiveBlending
     })
 );
-innerGlow.position.y = 9.3;
+innerGlow.position.y = 6.5;
 lampGroup.add(innerGlow);
 
 
@@ -189,11 +189,11 @@ const midGlow = new THREE.Mesh(
     new THREE.MeshBasicMaterial({
         color: 0xffdd99,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.15,
         blending: THREE.AdditiveBlending
     })
 );
-midGlow.position.y = 9.3;
+midGlow.position.y = 6.5;
 lampGroup.add(midGlow);
 
 
@@ -202,11 +202,11 @@ const outerGlow = new THREE.Mesh(
     new THREE.MeshBasicMaterial({
         color: 0xffbb66,
         transparent: true,
-        opacity: 0.1,
+        opacity: 0.05,
         blending: THREE.AdditiveBlending
     })
 );
-outerGlow.position.y = 9.3;
+outerGlow.position.y = 6.5;
 lampGroup.add(outerGlow);
 
 
@@ -229,6 +229,7 @@ groundLight.castShadow = false;
 lampGroup.add(groundLight);
 
 
+// Same position as before
 lampGroup.position.set(3, -2, 6);
 lampGroup.rotation.y = -0.6;
 scene.add(lampGroup);
@@ -250,14 +251,14 @@ scene.add(fillLight);
 scene.add(fillLight.target);
 
 
-// MASSIVE STARFIELD - Way more stars!
+// Stars
 const starsGeo = new THREE.BufferGeometry();
 const starVerts = [];
-for (let i = 0; i < 15000; i++) {
+for (let i = 0; i < 5000; i++) {
     starVerts.push(
-        (Math.random() - 0.5) * 1000,
-        Math.random() * 500 + 50,
-        (Math.random() - 0.5) * 1000
+        (Math.random() - 0.5) * 700,
+        Math.random() * 350 + 70,
+        (Math.random() - 0.5) * 700
     );
 }
 starsGeo.setAttribute('position', new THREE.Float32BufferAttribute(starVerts, 3));
@@ -269,8 +270,8 @@ starCanvas.height = 32;
 const starCtx = starCanvas.getContext('2d');
 const starGrad = starCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
 starGrad.addColorStop(0, 'rgba(255,255,255,1)');
-starGrad.addColorStop(0.3, 'rgba(240,245,255,0.9)');
-starGrad.addColorStop(1, 'rgba(200,220,255,0)');
+starGrad.addColorStop(0.4, 'rgba(230,235,255,0.7)');
+starGrad.addColorStop(1, 'rgba(200,210,255,0)');
 starCtx.fillStyle = starGrad;
 starCtx.fillRect(0, 0, 32, 32);
 
@@ -278,10 +279,10 @@ starCtx.fillRect(0, 0, 32, 32);
 const stars = new THREE.Points(
     starsGeo,
     new THREE.PointsMaterial({
-        size: 2.5,
+        size: 2.0,
         map: new THREE.CanvasTexture(starCanvas),
         transparent: true,
-        opacity: 1,
+        opacity: 0.85,
         blending: THREE.AdditiveBlending,
         sizeAttenuation: true
     })
@@ -289,33 +290,7 @@ const stars = new THREE.Points(
 scene.add(stars);
 
 
-// Distant stars layer
-const distantStarsGeo = new THREE.BufferGeometry();
-const distantVerts = [];
-for (let i = 0; i < 8000; i++) {
-    distantVerts.push(
-        (Math.random() - 0.5) * 1500,
-        Math.random() * 600,
-        (Math.random() - 0.5) * 1500
-    );
-}
-distantStarsGeo.setAttribute('position', new THREE.Float32BufferAttribute(distantVerts, 3));
-
-const distantStars = new THREE.Points(
-    distantStarsGeo,
-    new THREE.PointsMaterial({
-        size: 1.2,
-        color: 0xaaccff,
-        transparent: true,
-        opacity: 0.6,
-        blending: THREE.AdditiveBlending
-    })
-);
-scene.add(distantStars);
-
-
-// SPACE FOG - Very subtle
-scene.fog = new THREE.FogExp2(0x000000, 0.003);
+scene.fog = new THREE.FogExp2(0x0a1528, 0.007);
 
 
 camera.position.set(0, 4, 14);
@@ -482,11 +457,6 @@ function animate() {
     }
 
 
-    // Slow star rotation
-    if (stars) stars.rotation.y += 0.00005;
-    if (distantStars) distantStars.rotation.y += 0.00003;
-
-
     updateFPS();
     renderer.render(scene, camera);
 }
@@ -500,4 +470,4 @@ window.addEventListener('resize', () => {
 });
 
 
-console.log('🎬 V14 - Character at y:-2.05 + LAMP 6x + SPACE SKY 🌌');
+console.log('🎬 V14 - Character at y:-2.05 + LAMP.GLB (6x, Y:10)');
