@@ -798,24 +798,19 @@ html, body {
 }
 /* Force hide desktop UI on mobile */
 @media (max-width: 1023px) {
-    .nav {
-        display: none !important;
-    }
-    
-    .progress-bar {
-        display: none !important;
-    }
-    
-    .fps-counter {
-        display: none !important;
-    }
-    
-    .sections-container {
+    .nav,
+    .nav-links,
+    .progress-bar,
+    .fps-counter,
+    .sections-container,
+    .section,
+    .scroll-indicator,
+    .content-left,
+    .label,
+    .title,
+    .subtitle {
         display: none !important;
         opacity: 0 !important;
-    }
-    
-    .scroll-indicator {
-        display: none !important;
+        pointer-events: none !important;
     }
 }
