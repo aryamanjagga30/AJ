@@ -345,7 +345,7 @@ loader.load(
     (gltf) => {
         avatar = gltf.scene;
         avatar.scale.set(2.25, 2.25, 2.25);
-        avatar.position.set(0, -2.10, 0);
+        avatar.position.set(0, -2.07, 0);
         avatar.rotation.y = 0;
 
 
