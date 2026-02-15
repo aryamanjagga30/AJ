@@ -318,8 +318,8 @@ loader.load(
     modelURL,
     (gltf) => {
         avatar = gltf.scene;
-        avatar.scale.set(2, 2, 2);
-        avatar.position.set(0, -2.05, 0);
+        avatar.scale.set(3, 3, 3);
+        avatar.position.set(0, -2.10, 0);
         avatar.rotation.y = 0;
 
 
