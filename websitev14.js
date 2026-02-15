@@ -154,7 +154,7 @@ lampLoader.load(
         lampModel.scale.set(4, 4, 4);
 
         // POSITION IT UP
-        lampModel.position.y = 4.5;
+        lampModel.position.y = 4.25;
 
         lampModel.traverse((child) => {
             if (child.isMesh) {
@@ -180,7 +180,7 @@ const innerGlow = new THREE.Mesh(
         blending: THREE.AdditiveBlending
     })
 );
-innerGlow.position.y = 6.5;
+innerGlow.position.y = 6.25;
 lampGroup.add(innerGlow);
 
 
@@ -193,7 +193,7 @@ const midGlow = new THREE.Mesh(
         blending: THREE.AdditiveBlending
     })
 );
-midGlow.position.y = 6.5;
+midGlow.position.y = 6.25;
 lampGroup.add(midGlow);
 
 
@@ -206,7 +206,7 @@ const outerGlow = new THREE.Mesh(
         blending: THREE.AdditiveBlending
     })
 );
-outerGlow.position.y = 6.5;
+outerGlow.position.y = 6.25;
 lampGroup.add(outerGlow);
 
 
