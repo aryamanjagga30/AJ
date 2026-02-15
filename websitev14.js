@@ -11,18 +11,47 @@ function isMobileDevice() {
 
 const IS_MOBILE = isMobileDevice();
 
+// Mobile camera animation and UI
 if (IS_MOBILE) {
-    // Show mobile view
-    window.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('mobile-view').classList.remove('hidden');
-        
-        // Hide desktop UI elements
-        document.querySelector('.nav').classList.add('desktop-ui', 'hidden');
-        document.querySelector('.progress-bar').classList.add('desktop-ui', 'hidden');
-        document.querySelector('.fps-counter').classList.add('desktop-ui', 'hidden');
-        document.querySelector('.sections-container').classList.add('desktop-ui', 'hidden');
+    // Start from default position, will animate after avatar loads
+    let mobileAnimationDone = false;
+    
+    // Override the avatar load callback
+    const originalAvatarLoad = loader.load;
+    
+    // Wait for avatar to load, then animate camera
+    setTimeout(() => {
+        if (avatar && !mobileAnimationDone) {
+            mobileAnimationDone = true;
+            
+            // Camera pan animation (from scene 1 to scene 2 position)
+            gsap.to(camera.position, {
+                x: -2,
+                y: 0.3,
+                z: 2.5,
+                duration: 2.5,
+                ease: 'power2.inOut',
+                onUpdate: () => camera.lookAt(0, 1.5, 0),
+                onComplete: () => {
+                    // Show mobile UI after camera animation
+                    const mobileView = document.getElementById('mobile-view');
+                    mobileView.classList.add('show');
+                    
+                    setTimeout(() => {
+                        document.querySelector('.mobile-logo').classList.add('animate');
+                        document.querySelector('.mobile-message').classList.add('animate');
+                    }, 100);
+                }
+            });
+        }
+    }, 1000);
+    
+    // Disable section navigation on mobile
+    document.querySelectorAll('[data-section]').forEach(el => {
+        el.style.pointerEvents = 'none';
     });
 }
+
 
 // ===== ORIGINAL V14 CODE CONTINUES BELOW =====
 
