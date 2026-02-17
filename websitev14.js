@@ -543,7 +543,11 @@ function animate() {
 
     const delta = clock.getDelta();
     const time = Date.now();
-
+        // Rotate sky slowly
+    
+        if (sky) {
+        sky.rotation.y += 0.0010;
+    }
 
     if (mixer) mixer.update(delta);
 
