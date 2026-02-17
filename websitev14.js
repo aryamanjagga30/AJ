@@ -134,26 +134,57 @@ function updateFPS() {
 
 
 // Sky
-scene.background = new THREE.Color(0x0a1528);
-const skyGeo = new THREE.SphereGeometry(450, 32, 32);
+// Sky - Deep Space with Nebula
+scene.background = new THREE.Color(0x000510);
+const skyGeo = new THREE.SphereGeometry(450, 64, 64);
 const skyMat = new THREE.ShaderMaterial({
     uniforms: {
-        topColor: { value: new THREE.Color(0x0a1020) },
-        bottomColor: { value: new THREE.Color(0x1a2840) }
+        time: { value: 0 }
     },
     vertexShader: `
+        varying vec3 vPosition;
         varying float vY;
         void main() {
+            vPosition = position;
             vY = normalize(position).y;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
     `,
     fragmentShader: `
-        uniform vec3 topColor;
-        uniform vec3 bottomColor;
+        uniform float time;
+        varying vec3 vPosition;
         varying float vY;
+        
+        // Noise function for nebula
+        float noise(vec3 p) {
+            return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+        }
+        
         void main() {
-            gl_FragColor = vec4(mix(bottomColor, topColor, max(vY, 0.0)), 1.0);
+            // Base deep space colors
+            vec3 deepSpace = vec3(0.0, 0.02, 0.08);
+            vec3 nebulaPurple = vec3(0.15, 0.05, 0.25);
+            vec3 nebulaBlue = vec3(0.05, 0.1, 0.3);
+            vec3 nebulaPink = vec3(0.2, 0.05, 0.15);
+            
+            // Create nebula clouds using noise
+            float n1 = noise(vPosition * 0.3);
+            float n2 = noise(vPosition * 0.5 + vec3(10.0));
+            float n3 = noise(vPosition * 0.2 + vec3(20.0));
+            
+            // Combine noise for nebula effect
+            float nebula = n1 * 0.5 + n2 * 0.3 + n3 * 0.2;
+            nebula = smoothstep(0.4, 0.7, nebula);
+            
+            // Mix nebula colors
+            vec3 nebulaColor = mix(nebulaPurple, nebulaBlue, n1);
+            nebulaColor = mix(nebulaColor, nebulaPink, n2 * 0.5);
+            
+            // Final color with vertical gradient
+            vec3 skyColor = mix(deepSpace, vec3(0.01, 0.03, 0.12), max(vY, 0.0));
+            skyColor = mix(skyColor, nebulaColor, nebula * 0.4);
+            
+            gl_FragColor = vec4(skyColor, 1.0);
         }
     `,
     side: THREE.BackSide
@@ -161,15 +192,6 @@ const skyMat = new THREE.ShaderMaterial({
 const sky = new THREE.Mesh(skyGeo, skyMat);
 scene.add(sky);
 
-
-const ambient = new THREE.AmbientLight(0x506070, 0.65);
-scene.add(ambient);
-
-
-const moonRim = new THREE.DirectionalLight(0x5080c0, 0.45);
-moonRim.position.set(-25, 50, -20);
-moonRim.castShadow = false;
-scene.add(moonRim);
 
 
 // Grass
