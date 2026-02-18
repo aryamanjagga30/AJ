@@ -545,7 +545,7 @@ function animate() {
     const time = Date.now();
         // Rotate sky slowly
     
-        const (sky) {
+        if (sky) {
         sky.rotation.y += 0.0010;
     }
 
