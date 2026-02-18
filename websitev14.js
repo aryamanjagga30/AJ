@@ -136,8 +136,8 @@ function updateFPS() {
 // Sky
 // Sky - Deep Space with Nebula
 scene.background = new THREE.Color(0x000510);
-const skyGeo = new THREE.SphereGeometry(450, 64, 64);
-const skyMat = new THREE.ShaderMaterial({
+let skyGeo = new THREE.SphereGeometry(450, 64, 64);
+let skyMat = new THREE.ShaderMaterial({
     uniforms: {
         time: { value: 0 }
     },
