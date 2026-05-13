@@ -115,6 +115,18 @@ renderer.toneMappingExposure = 1.4;
 renderer.physicallyCorrectLights = true;
 
 
+// ===== LOADING PROGRESS =====
+const loadingFill = document.getElementById('loading-bar-fill');
+const loadingText = document.getElementById('loading-text');
+let avatarProgress = 0;
+let lampProgress = 0;
+
+function updateLoadingBar() {
+  const combined = Math.round(avatarProgress * 0.8 + lampProgress * 0.2);
+  if (loadingFill) loadingFill.style.width = combined + '%';
+  if (loadingText) loadingText.textContent = 'Loading... ' + combined + '%';
+}
+
 let frameCount = 0;
 let lastTime = performance.now();
 const fpsCounter = document.querySelector('.fps-counter');
@@ -436,7 +448,7 @@ loader.load(
     (gltf) => {
         avatar = gltf.scene;
         avatar.scale.set(2.25, 2.25, 2.25);
-        avatar.position.set(0, -2.10, 0);
+        avatar.position.set(0, -2.07, 0);
         avatar.rotation.y = 0;
 
 
